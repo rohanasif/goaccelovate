@@ -4,6 +4,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import SignOutButton from "./sign-out-button";
+import Loading from "./loading";
 
 export default function ProtectedLayout({ children }) {
   const { data: session, status } = useSession();
@@ -11,12 +12,12 @@ export default function ProtectedLayout({ children }) {
 
   useEffect(() => {
     if (status === "unauthenticated") {
-      router.push("/auth/signin");
+      router.replace("/auth/signin");
     }
   }, [status, router]);
 
   if (status === "loading") {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   if (!session) {

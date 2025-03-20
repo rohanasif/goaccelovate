@@ -5,20 +5,16 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 export default function Home() {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const router = useRouter();
 
   useEffect(() => {
     if (status === "authenticated") {
-      router.push("/todos");
+      router.replace("/todos");
     } else if (status === "unauthenticated") {
-      router.push("/auth/signin");
+      router.replace("/auth/signin");
     }
   }, [status, router]);
 
-  return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="text-xl">Loading...</div>
-    </div>
-  );
+  return null;
 }

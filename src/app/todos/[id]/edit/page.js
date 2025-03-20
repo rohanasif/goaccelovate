@@ -9,6 +9,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { ArrowLeft } from "lucide-react";
 import { use } from "react";
 import ProtectedLayout from "@/components/protected-layout";
+import Loading from "@/components/loading";
 
 export default function EditTodoPage({ params }) {
   const router = useRouter();
@@ -55,7 +56,7 @@ export default function EditTodoPage({ params }) {
     }
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loading />;
   if (error) return <div>Error: {error}</div>;
   if (!todo) return <div>Todo not found</div>;
 
@@ -66,7 +67,6 @@ export default function EditTodoPage({ params }) {
           <Button
             variant="ghost"
             size="icon"
-            disabled={isSubmitting}
             onClick={() => router.push("/todos")}
           >
             <ArrowLeft className="h-4 w-4" />
@@ -76,7 +76,7 @@ export default function EditTodoPage({ params }) {
 
         <Card>
           <CardContent className="pt-6">
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
                 <label className="text-sm font-medium">Title</label>
                 <Input
@@ -84,9 +84,9 @@ export default function EditTodoPage({ params }) {
                   onChange={(e) => setTodo({ ...todo, title: e.target.value })}
                   required
                   disabled={isSubmitting}
+                  placeholder="Enter todo title"
                 />
               </div>
-
               <div className="space-y-2">
                 <label className="text-sm font-medium">Description</label>
                 <Input
@@ -95,9 +95,9 @@ export default function EditTodoPage({ params }) {
                     setTodo({ ...todo, description: e.target.value })
                   }
                   disabled={isSubmitting}
+                  placeholder="Enter todo description (optional)"
                 />
               </div>
-
               <div className="flex items-center space-x-2">
                 <Checkbox
                   id="completed"
@@ -114,20 +114,9 @@ export default function EditTodoPage({ params }) {
                   Mark as completed
                 </label>
               </div>
-
-              <div className="flex justify-end gap-4">
-                <Button
-                  type="button"
-                  variant="outline"
-                  disabled={isSubmitting}
-                  onClick={() => router.push("/todos")}
-                >
-                  Cancel
-                </Button>
-                <Button type="submit" disabled={isSubmitting}>
-                  {isSubmitting ? "Saving..." : "Save Changes"}
-                </Button>
-              </div>
+              <Button type="submit" className="w-full" disabled={isSubmitting}>
+                {isSubmitting ? "Saving..." : "Save Changes"}
+              </Button>
             </form>
           </CardContent>
         </Card>

@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Plus, Pencil, Trash2 } from "lucide-react";
 import ProtectedLayout from "@/components/protected-layout";
+import Loading from "@/components/loading";
 
 export default function TodosPage() {
   const router = useRouter();
@@ -92,7 +93,7 @@ export default function TodosPage() {
     }
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loading />;
   if (error) return <div>Error: {error}</div>;
 
   return (
